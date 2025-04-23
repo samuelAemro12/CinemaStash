@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import User from './models/user.js'; 
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -9,10 +10,16 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/api/users', (req, res) => {
+app.post('/api/users', async (req, res) => {
     // Handle user creation logic here
-    res.send(req.body);
-    console.log(req.body);
+   try{
+    const user = await User.create(req.body);
+    res.status(201).json({Message: 'User created successfully', user });
+   }
+   catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({Message: error.message});
+    }
 });
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://samuelaemrowork12:6yAihjy0iKVaWLcK@cinemastashapi.1ecvscf.mongodb.net/CinemaStashAPI?retryWrites=true&w=majority&appName=CinemaStashAPI',)
