@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 const app = express();
+app.use(express.json()); // Middleware to parse JSON bodies
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
