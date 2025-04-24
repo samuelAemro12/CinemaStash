@@ -21,6 +21,20 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
+app.get('/api/users/:id', async (req, res) => {
+    // Handle user retrieval by ID logic here
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({Message: 'User not found'});
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Error retrieving user:', error);
+        res.status(500).json({Message: error.message});
+    }
+});
+
 app.post('/api/users', async (req, res) => {
     // Handle user creation logic here
    try{
