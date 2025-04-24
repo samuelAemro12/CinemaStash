@@ -62,6 +62,21 @@ app.put('/api/users/:id', async (req, res) => {
     }
 });
 
+app.delete('/api/users/:id', async (req, res) =>{
+    // handle user deletion logic here
+    try{
+        const user = await User.findByIdAndDelete(req.params.id);
+        if (!user) {
+            return res.status(404).json({Message: 'User not found'});
+        } 
+        
+        res.status(200).json({Message: 'User deleted successfully', user });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({Message: error.message});
+    }
+
+});
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://samuelaemrowork12:6yAihjy0iKVaWLcK@cinemastashapi.1ecvscf.mongodb.net/CinemaStashAPI?retryWrites=true&w=majority&appName=CinemaStashAPI',)
   .then(() => console.log('MongoDB connected...'))
