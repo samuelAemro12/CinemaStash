@@ -54,7 +54,8 @@ app.put('/api/users/:id', async (req, res) => {
         if (!user) {
             return res.status(404).json({Message: 'User not found'});
         } 
-        res.status(200).json({Message: 'User updated successfully', user });
+        const updatedUser = await User.findById(req.params.id);
+        res.status(200).json({Message: 'User updated successfully', updatedUser });
     } catch (error) {
         console.error('Error updating user:', error);
         res.status(500).json({Message: error.message});
