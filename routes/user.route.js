@@ -1,18 +1,18 @@
 import express from 'express';
-
-import User  from '../models/user.model.js';
-import getUser  from '../controllers/user.controller.js';
+import {
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
+} from '../controllers/user.controller.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    try {
-        const users = await User.find({});
-        res.status(200).json(users);
-    } catch (error) {
-        console.error('Error retrieving users:', error);
-        res.status(500).json({Message: error.message});
-    }
-});
+router.get('/', getUsers);
+router.get('/:id', getUser);
+router.post('/', createUser);
+router.put('/:id', updateUser);
+router.delete('/:id', deleteUser);
 
 export default router;
