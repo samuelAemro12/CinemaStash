@@ -1,7 +1,9 @@
 import express from 'express';
-import router from express.Router();
-import { User } from '../models/user.model.js';
 
+import { User } from '../models/user.model.js';
+import { getUser } from '../controllers/user.controller.js';
+
+const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
@@ -12,3 +14,5 @@ router.get('/', async (req, res) => {
         res.status(500).json({Message: error.message});
     }
 });
+
+export default router;

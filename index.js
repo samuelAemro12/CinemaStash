@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import User from './models/user.js'; 
+import User from './models/user.module.js'; 
+import userRouter from './routes/user.route.js';
 
 const app = express();
 
@@ -9,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
 // routes
-app.use(('/api/users'), userRouter);
+app.use('/api/users', userRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
