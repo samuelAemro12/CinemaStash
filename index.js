@@ -3,8 +3,12 @@ import mongoose from 'mongoose';
 import User from './models/user.js'; 
 
 const app = express();
-app.use(express.json()); // Middleware to parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
+
+// middleware 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
