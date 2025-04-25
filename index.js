@@ -4,7 +4,7 @@ import User from './models/user.js';
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON bodies
-
+app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
