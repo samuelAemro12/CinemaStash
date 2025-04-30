@@ -1,4 +1,30 @@
 import Movie from '../models/movie.model.js';
+import { fetchMovieByTitle } from '../services/tmdb.service.js';
+
+export const createMovie = async (req, res) => {
+  const { title } = req.body;
+
+  try {
+    const existing = await Movie.findOne({ title });
+    if (existing) return res.status(400).json({ message: 'Movie already exists' });
+
+    const movieData = await fetchMovieByTitle(title);
+    if (!movieData) return res.status(404).json({ message: 'Movie not found on TMDB' });
+
+    const newMovie = new Movie({
+      title: movieData.title,
+      description: movieData.overview || 'No description available.',
+      releaseDate: movieData.release_date || new Date(),
+      genre: [],
+      posterUrl: `https://image.tmdb.org/t/p/w500${movieData.poster_path}` || '',
+    });
+
+    await newMovie.save();
+    res.status(201).json(newMovie);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
 
 export const getMovies = async (req, res) => {
   try {
@@ -38,5 +64,3 @@ export const deleteMovie = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
-// export const CreateMovie
