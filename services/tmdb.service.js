@@ -22,4 +22,19 @@ export const fetchPopularMovies = async () => {
       throw error;
     }
   };
+
+export const fetchMovieByTitle = async (title) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/search/movie`, {
+        params: {
+          api_key: API_KEY,
+          query: title,
+        },
+      });
+      return response.data.results[0]; // Return the first result
+    } catch (error) {
+      console.error('Error fetching movie by title from TMDB:', error.message);
+      throw error;
+    }
+  };
   
