@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
+import movieRouter from './routes/movie.route.js';
 import dotenv from 'dotenv';
 
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/users', userRouter);
+app.use('/api/movies', movieRouter);
 
 // Root route
 app.get('/', (req, res) => {
