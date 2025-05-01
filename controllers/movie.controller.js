@@ -15,8 +15,8 @@ export const createMovie = async (req, res) => {
       title: movieData.title,
       description: movieData.overview || 'No description available.',
       releaseDate: movieData.release_date || new Date(),
-      genre: [],
-      posterUrl: `https://image.tmdb.org/t/p/w500${movieData.poster_path}` || '',
+      genre: [], // optional: could parse movieData.genre_ids if needed
+      posterUrl: movieData.poster_path ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}` : '',
     });
 
     await newMovie.save();
