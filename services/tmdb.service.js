@@ -29,6 +29,7 @@ export const fetchMovieByTitle = async (title) => {
         params: {
           api_key: API_KEY,
           query: title,
+          language: 'en-US',
         },
       });
       return response.data.results[0]; // Return the first result
