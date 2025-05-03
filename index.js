@@ -4,7 +4,9 @@ import userRouter from './routes/user.route.js';
 import movieRouter from './routes/movie.route.js';
 import wishlistRouter from './routes/wishlist.route.js';
 import reviewRouter from './routes/review.route.js';
+import authRouter from './routes/auth.route.js';
 import dotenv from 'dotenv';
+
 
 const app = express();
 dotenv.config();
@@ -13,15 +15,18 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
 // Routes
 app.use('/api/users', userRouter);
 app.use('/api/movies', movieRouter);
 app.use('/api/wishlist', wishlistRouter);
 app.use('/api/reviews', reviewRouter);
+app.use('/api/auth', authRouter);
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('Cinema API is live');
+  res.send('CinemaStash API is live');
 });
 
 // MongoDB connection
