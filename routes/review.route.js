@@ -5,12 +5,15 @@ import {
   updateReview,
   deleteReview
 } from '../controllers/review.controller.js';
+import { protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
-
-router.post('/', createReview);
+// for public route
 router.get('/movie/:movieId', getReviewsByMovie);
-router.put('/:id', updateReview);
-router.delete('/:id', deleteReview);
+
+// for authenticated user
+router.post('/', protect, createReview);
+router.put('/:id', protect, updateReview);
+router.delete('/:id', protect, deleteReview);
 
 export default router;
