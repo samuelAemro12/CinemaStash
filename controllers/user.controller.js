@@ -1,4 +1,5 @@
 import User from '../models/user.model.js';
+import Wishlist from '../models/wishlist.model.js';
 
 export const getUsers = async (req, res) => {
   try {
@@ -56,5 +57,41 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.error('Error deleting user:', error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const getUserProfileStats = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const wishlistItems = await Wishlist.find({ userId });
+
+    const totalMovies = wishlistItems.length;
+    const watchedCount = wishlistItems.filter(item => item.watched).length;
+    const favoriteCount = wishlistItems.filter(item => item.favorite).length;
+    const ratedItems = wishlistItems.filter(item => typeof item.rating === 'number');
+    const averageRating =
+      ratedItems.length > 0
+        ? (ratedItems.reduce((sum, item) => sum + item.rating, 0) / ratedItems.length).toFixed(2)
+        : null;
+
+    res.status(200).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      stats: {
+        totalMovies,
+        watchedCount,
+        favoriteCount,
+        averageRating,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
