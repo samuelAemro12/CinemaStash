@@ -15,7 +15,25 @@ const wishlistSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-}, { timestamps: true });
+comment: {
+  type: String,
+  default: '',
+},
+rating: {
+  type: Number,
+  min: 1,
+  max: 5,
+  default: 0,
+},
+watched: {
+  type: Boolean,
+  default: false,
+},
+favorite: {
+  type: Boolean,
+  default: false,
+}, }, 
+{ timestamps: true });
 
 wishlistSchema.index({ userId: 1, movieId: 1 }, { unique: true }); // Prevent duplicates
 

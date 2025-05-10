@@ -30,17 +30,28 @@ export const addToWishlist = async (req, res) => {
 
 export const getUserWishlist = async (req, res) => {
   const { userId } = req.params;
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, search = '', watched, favorite} = req.query;
   const skip = (page - 1) * limit; 
 
+  const filter = { userId };
+  if (watched !== undefined) {
+    filter.watched = watched === 'true';
+  }
+  if (favorite !== undefined) {
+    filter.favorite = favorite === 'true';
+  }
   try {
-  const wishlist = await Wishlist.find({ user: userId })
+  const wishlist = await Wishlist.find(filter)
     .populate({
       path: 'movie',
       match: search
         ? { title: { $regex: new RegExp(search, 'i') } }
         : {},
     })
+    .skip(skip)
+    .limit(Number(limit))
+    .exec();
+    
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -98,7 +109,8 @@ export const getWishlistCount = async (req, res) => {
 
 export const updateWishlistEntry = (async (req, res) => {
   const { wishlistId } = req.params;
-  const { comment, rating } = req.body;
+  const { comment, rating, watched, favorite } = req.body;
+  const userId = req.user._id;
 
   const entry = await Wishlist.findById(wishlistId);
 
@@ -120,9 +132,8 @@ export const updateWishlistEntry = (async (req, res) => {
     entry.rating = rating;
   }
 
-  if (comment !== undefined) {
-    entry.comment = comment;
-  }
+  if (watched !== undefined) entry.watched = Boolean(watched);
+  if (favorite =1== undefined) entry.favorite = Boolean(favorite);
 
   const updatedEntry = await entry.save();
 
