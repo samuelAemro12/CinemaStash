@@ -16,7 +16,7 @@ export const fetchPopularMovies = async () => {
         },
       });
   
-      return response.data.results; // An array of movie objects
+      return response.data.results; 
     } catch (error) {
       console.error('Error fetching popular movies from TMDB:', error.message);
       throw error;
@@ -32,10 +32,26 @@ export const fetchMovieByTitle = async (title) => {
           language: 'en-US',
         },
       });
-      return response.data.results[0]; // Return the first result
+      return response.data.results[0];
     } catch (error) {
       console.error('Error fetching movie by title from TMDB:', error.message);
       throw error;
     }
   };
-  
+
+  export const fetchSimilarMovies = async (movieId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/movie/${movieId}/similar`, {
+        params: {
+          api_key: API_KEY,
+          language: 'en-US',
+          page: 1,
+        },
+      });
+      return response.data.results; 
+    }
+    catch (error) {
+      console.error('Error fetching similar movies from TMDB:', error.message);
+      throw error;
+    }
+  };
