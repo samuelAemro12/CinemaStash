@@ -73,3 +73,14 @@ const total = await Wishlist.countDocuments({ user: userId });
   page: number(page),
   totalPages:Math.ceil(total / limit)
   });
+
+export const clearWishlist = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    await Wishlist.deleteMany({ userId });
+    res.status(200).json({ message: 'Wishlist cleared' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}
