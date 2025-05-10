@@ -30,10 +30,17 @@ export const addToWishlist = async (req, res) => {
 
 export const getUserWishlist = async (req, res) => {
   const { userId } = req.params;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit; 
 
   try {
-    const wishlist = await Wishlist.find({ userId }).populate('movieId');
-    res.status(200).json(wishlist);
+  const wishlist = await Wishlist.find({ user: userId })
+    .populate({
+      path: 'movie',
+      match: search
+        ? { title: { $regex: new RegExp(search, 'i') } }
+        : {},
+    })
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -54,3 +61,15 @@ export const removeFromWishlist = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+const filteredWishlist = wishlist.filter((item) => item.movie !== null);
+
+const total = await Wishlist.countDocuments({ user: userId });
+  const totalPages = Math.ceil(total / limit);
+
+  res.status(200).json({
+  success: true,
+  data: filteredWishlist,
+  page: number(page),
+  totalPages:Math.ceil(total / limit)
+  });
