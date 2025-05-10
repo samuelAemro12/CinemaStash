@@ -84,3 +84,51 @@ export const clearWishlist = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 }
+
+export const getWishlistCount = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const count = await Wishlist.countDocuments({ userId });
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const updateWishlistEntry = (async (req, res) => {
+  const { wishlistId } = req.params;
+  const { comment, rating } = req.body;
+
+  const entry = await Wishlist.findById(wishlistId);
+
+  if (!entry) {
+    res.status(404);
+    throw new Error('Wishlist item not found');
+  }
+  if (entry.user._id.toString() !== userId.toString()) {
+    res.status(403);
+    throw new Error('Not authorized to update this wishlist item');
+  }
+
+  if (comment !== undefined) entry.comment = comment;
+    if (rating !== undefined) {
+    if (typeof rating !== 'number' || rating < 0 || rating > 5) {
+      res.status(400);
+      throw new Error('Rating must be a number between 0 and 5');
+    }
+    entry.rating = rating;
+  }
+
+  if (comment !== undefined) {
+    entry.comment = comment;
+  }
+
+  const updatedEntry = await entry.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Wishlist entry updated successfully',
+    data: updatedEntry,
+  });
+});
