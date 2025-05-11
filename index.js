@@ -6,6 +6,7 @@ import wishlistRouter from './routes/wishlist.route.js';
 import reviewRouter from './routes/review.route.js';
 import authRouter from './routes/auth.route.js';
 import dotenv from 'dotenv';
+import { publicLimiter } from './middlewares/rateLimitter.js';
 
 
 const app = express();
@@ -15,6 +16,7 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(publicLimiter);
 
 
 // Routes
