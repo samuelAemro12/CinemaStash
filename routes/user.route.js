@@ -13,10 +13,10 @@ import { profileLimiter } from '../middlewares/rateLimitter.js';
 const router = express.Router();
 
 router.get('/', getUsers);
-router.get('/:id', getUser);
-router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
-router.get('/:id/stats', getUserProfileStats);
+router.get('/:id', protect, profileLimiter, getUser);
+router.post('/', protect, createUser);
+router.put('/:id', protect, updateUser);
+router.delete('/:id', protect, deleteUser);
+router.get('/:id/stats', protect, profileLimiter, getUserProfileStats);
 
 export default router;
