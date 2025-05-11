@@ -1,5 +1,5 @@
 import Movie from '../models/movie.model.js';
-import { fetchMovieByTitle, fetchPopularMovies } from '../services/tmdb.service.js';
+import { fetchMovieByTitle, fetchPopularMovies, fetchMovieTrailer } from '../services/tmdb.service.js';
 
 export const createMovie = async (req, res) => {
   const { title } = req.body;
@@ -89,5 +89,28 @@ export const fetchMovieByTitleHandler = async (req, res) => {
     res.status(200).json({ success: true, data: movie });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to search movie', error: error.message });
+  }
+};
+
+export const getMovieTrailerHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const trailer = await fetchMovieTrailer(id);
+
+    if (!trailer) {
+      return res.status(404).json({ success: false, message: 'No trailer found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      trailer: {
+        name: trailer.name,
+        key: trailer.key, // YouTube video key
+        site: trailer.site,
+        url: `https://www.youtube.com/watch?v=${trailer.key}`,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to fetch trailer', error: error.message });
   }
 };
