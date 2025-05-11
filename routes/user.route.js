@@ -7,6 +7,8 @@ import {
   deleteUser,
   getUserProfileStats
 } from '../controllers/user.controller.js';
+import { protect } from '../middlewares/authMiddleware.js';
+import { profileLimiter } from '../middlewares/rateLimitter.js';
 
 const router = express.Router();
 
