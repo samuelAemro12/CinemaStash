@@ -14,15 +14,14 @@ const sendTokenResponse = (res, user, statusCode) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'Strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 7 * 24 * 60 * 60 * 1000, 
   };
 
   res
     .status(statusCode)
     .cookie('token', token, options)
     .json({
-      success: true,
-      token,
+      success: true, 
       user: {
         _id: user._id,
         username: user.username,

@@ -7,6 +7,7 @@ import reviewRouter from './routes/review.route.js';
 import authRouter from './routes/auth.route.js';
 import dotenv from 'dotenv';
 import { publicLimiter } from './middlewares/rateLimitter.js';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(publicLimiter);
 
+app.use(cookieParser());
 
 // Routes
 app.use('/api/users', userRouter);
