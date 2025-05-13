@@ -13,13 +13,14 @@ const reviewSchema = new mongoose.Schema({
   },
   comment: {
     type: String,
-    default: ''
+    required: [true, 'Comment is required'],
+    trim: true,
   },
   rating: {
     type: Number,
     min: 0,
-    max: 10,
-    required: true
+    max: 5,
+    required: [true, 'Rating is required'],
   }
 }, { timestamps: true });
 
