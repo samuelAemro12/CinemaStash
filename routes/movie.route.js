@@ -9,13 +9,14 @@ import {
 import { fetchMovieByTitleHandler, fetchPopularMoviesHandler,
           getMovieTrailerHandler} from '../controllers/movie.controller.js';   
 import { publicLimiter } from '../middlewares/rateLimitter.js';
+import { protect } from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 router.get('/', getMovies);
 router.get('/:id', getMovie);
 router.post('/', createMovie);
-router.put('/:id', updateMovie);
-router.delete('/:id', deleteMovie);
+router.put('/:id', protect, updateMovie);
+router.delete('/:id', protect, deleteMovie);
 router.get('/popular', publicLimiter, fetchPopularMoviesHandler);
 router.get('/search', publicLimiter, fetchMovieByTitleHandler);
 router.get('/:id/trailer', publicLimiter, getMovieTrailerHandler);

@@ -11,9 +11,13 @@ const movieSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  trialerUrl: {
+    type: String,
+    default: ''
+  },
   description: {
     type: String,
-    required: true
+    default: 'No description available',
   },
   overview: {
     type: String
