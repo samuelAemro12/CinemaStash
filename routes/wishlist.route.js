@@ -21,7 +21,7 @@ router.get('/:userId/recomendations', protect, publicLimiter, getMovieRecommenda
 // write opps
 router.post('/', protect, dataWriteLimiter, addToWishlist);
 router.put('/:wishlistId', protect, dataWriteLimiter, updateWishlistEntry);
-router.delete('/', protect, dataWriteLimiter, removeFromWishlist);
+router.delete('/:userId/:movieId', protect, dataWriteLimiter, removeFromWishlist);
 router.delete('/clear/:userId', protect, dataWriteLimiter, clearWishlist);
 
 
