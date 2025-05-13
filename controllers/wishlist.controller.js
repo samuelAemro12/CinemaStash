@@ -88,10 +88,10 @@ export const getUserWishlist = async (req, res) => {
 };
 
 export const removeFromWishlist = async (req, res) => {
-  const { userId, movieId } = req.body;
+  const { userId, movieId } = req.params;
 
   try {
-    const deleted = await Wishlist.findOneAndDelete({ userId, movieId });
+    const deleted = await Wishlist.findOneAndDelete({ user: userId, movie: movieId });
 
     if (!deleted) {
       return res.status(404).json({ message: 'Movie not found in wishlist' });
