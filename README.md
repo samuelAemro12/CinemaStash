@@ -32,44 +32,6 @@ CinemaStash is a backend API for a movie management system built with MongoDB, E
 - **Validation** - express-validator
 - **Rate Limiting** - express-rate-limit
 
-## 📁 Folder Structure
-CinemaStash/
-├── controllers/
-│   ├── auth.controller.js
-│   ├── movie.controller.js
-│   ├── review.controller.js
-│   ├── user.controller.js
-│   ├── wishlist.controller.js
-│   └── recommendation.controller.js
-├── middleware/
-│   ├── authMiddleware.js
-│   └── rateLimiter.js
-├── models/
-│   ├── movie.model.js
-│   ├── review.model.js
-│   ├── user.model.js
-│   └── wishlist.model.js
-├── routes/
-│   ├── auth.route.js
-│   ├── movie.route.js
-│   ├── review.route.js
-│   ├── user.route.js
-│   ├── wishlist.route.js
-│   └── recommendation.route.js
-├── services/
-│   └── tmdb.service.js
-├── validators/
-│   ├── auth.validator.js
-│   ├── movie.validator.js
-│   ├── review.validator.js
-│   └── wishlist.validator.js
-├── .gitignore
-├── index.js
-├── LICENSE
-├── package.json
-└── README.md
-
-
 ## ⚙️ How To Run Locally
 
 ### Steps
