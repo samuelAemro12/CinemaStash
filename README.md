@@ -69,6 +69,7 @@ CinemaStash/
 ├── package.json
 └── README.md
 
+
 ## ⚙️ How To Run Locally
 
 ### Steps
