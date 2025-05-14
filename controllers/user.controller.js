@@ -3,13 +3,13 @@ import Wishlist from '../models/wishlist.model.js';
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json(users);
+    const users = await User.find().select('username createdAt'); 
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
-    console.error('Error retrieving users:', error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: 'Failed to fetch users', error: error.message });
   }
 };
+
 
 export const getUser = async (req, res) => {
   try {
