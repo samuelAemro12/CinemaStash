@@ -55,7 +55,7 @@ CinemaStash/
 │   ├── review.route.js
 │   ├── user.route.js
 │   ├── wishlist.route.js
-│   └── recommendation.route.js (optional if you're adding this)
+│   └── recommendation.route.js
 ├── services/
 │   └── tmdb.service.js
 ├── validators/
