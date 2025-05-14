@@ -8,41 +8,19 @@ CinemaStash is a backend API for a movie management system built with MongoDB, E
 🎥 TMDB Integration: Fetch movie details and posters by title.
 ✅ Input Validation: express-validator for user, review, and movie routes.
 🛡️ Security: Protected routes, sensitive data filtering (e.g., password, email).
-📊 Planned:
-Pagination, advanced search, filters, sorting.
-Movie recommendations based on user activity.
-Rate limiting for public/write routes.
-
-
 
 🏗️ Tech Stack
+Layer - Technology
 
+Backend - Node.js, Express.js, MongoDB (Mongoose)
 
+API Data - TMDB API
 
-Layer
-Technology
+Authentication - JWT, bcrypt
 
+Validation - express-validator
 
-
-Backend
-Node.js, Express.js, MongoDB (Mongoose)
-
-
-API Data
-TMDB API
-
-
-Authentication
-JWT, bcrypt
-
-
-Validation
-express-validator
-
-
-Rate Limiting
-express-rate-limit (planned)
-
+Rate Limiting - express-rate-limit
 
 📁 Folder Structure
 CinemaStash/
@@ -51,9 +29,11 @@ CinemaStash/
 │   ├── movie.controller.js
 │   ├── review.controller.js
 │   ├── user.controller.js
-│   └── wishlist.controller.js
+│   ├── wishlist.controller.js
+│   └── recommendation.controller.js
 ├── middleware/
-│   └── authMiddleware.js
+│   ├── authMiddleware.js
+│   └── rateLimiter.js
 ├── models/
 │   ├── movie.model.js
 │   ├── review.model.js
@@ -64,181 +44,56 @@ CinemaStash/
 │   ├── movie.route.js
 │   ├── review.route.js
 │   ├── user.route.js
-│   └── wishlist.route.js
+│   ├── wishlist.route.js
+│   └── recommendation.route.js (optional if you're adding this)
 ├── services/
 │   └── tmdb.service.js
+├── validators/
+│   ├── auth.validator.js
+│   ├── movie.validator.js
+│   ├── review.validator.js
+│   └── wishlist.validator.js
 ├── .gitignore
 ├── index.js
-├── License
-├── package-lock.json
-└── package.json
-
-Note: Planned additions include recommendation.controller.js, rateLimiter.js, validateRequest.js, and a validators/ folder (auth.validator.js, movie.validator.js, wishlist.validator.js).
-⚙️ Setup & Installation
-Prerequisites
-
-Node.js (v16+)
-MongoDB (v5+, local or MongoDB Atlas)
-TMDB API key (sign up)
-Git
-
-Steps
-
-Clone the repository:
-git clone https://github.com/samuelAemro12/CinemaStash.git
-cd CinemaStash
+├── LICENSE
+├── package.json
+└── README.md
 
 
-Install dependencies:
+---
+
+## ⚙️ Setup & Installation
+
+### Prerequisites
+
+- Node.js (v16+)
+- MongoDB (v5+)
+- TMDB API key ([sign up](https://www.themoviedb.org/ ))
+- Git
+
+### Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/samuelAemro12/CinemaStash.git   
+   cd CinemaStash
+   ```
+   Install dependencies:
+``` bash
 npm install
-
-
-Set up .env: Create a .env file in the root:
-PORT=3000
+```
+Set up .env: Create a .env file in the root directory:
+env
+```bash
+PORT=5000
 MONGO_URI=mongodb://localhost:27017/cinemastash
 JWT_SECRET=your_jwt_secret
 TMDB_API_KEY=your_tmdb_api_key
-
-
-For MongoDB Atlas, use your cluster URI.
-Generate a secure JWT_SECRET (e.g., openssl rand -base64 32).
-Obtain TMDB_API_KEY from TMDB.
-
-
+```
 Run the server:
+```bash
 npm run start
-
-API available at http://localhost:3000.
-
-
-🧪 API Endpoints
-🔒 Auth
-
-
-
-Method
-Endpoint
-Description
-Auth Required
-
-
-
-POST
-/api/auth/register
-Register a user
-No
-
-
-POST
-/api/auth/login
-Login and get JWT
-No
-
-
-🎞️ Movies
-
-
-
-Method
-Endpoint
-Description
-Auth Required
-
-
-
-GET
-/api/movies
-Get all movies
-No
-
-
-GET
-/api/movies/:id
-Get a movie by ID
-No
-
-
-POST
-/api/movies
-Add movie from TMDB
-No
-
-
-PUT
-/api/movies/:id
-Update movie
-Yes
-
-
-DELETE
-/api/movies/:id
-Delete movie
-Yes
-
-
-📝 Wishlist
-
-
-
-Method
-Endpoint
-Description
-Auth Required
-
-
-
-POST
-/api/wishlist
-Add to wishlist
-Yes
-
-
-GET
-/api/wishlist/:userId
-Get user’s wishlist
-Yes
-
-
-DELETE
-/api/wishlist/:userId/:movieId
-Remove from wishlist
-Yes
-
-
-🌟 Reviews
-
-
-
-Method
-Endpoint
-Description
-Auth Required
-
-
-
-GET
-/api/reviews/:movieId
-Get movie reviews
-No
-
-
-POST
-/api/reviews
-Create review
-Yes
-
-
-PUT
-/api/reviews/:id
-Update review
-Yes (owner)
-
-
-DELETE
-/api/reviews/:id
-Delete review
-Yes (owner)
-
+```
 
 🔐 Security & Validation
 
@@ -255,7 +110,7 @@ JWT Issues: Check JWT_SECRET and token in Authorization: Bearer <token>.
 
 📃 License
 MIT License.
-✨ Author
+✨ ## Author
 Samuel Aemro Melese
 
 📧 samuelaemrowork12@gmail.com
