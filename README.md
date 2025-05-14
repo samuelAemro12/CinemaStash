@@ -1,51 +1,54 @@
-# 🎬 CinemaStash
+🎬 CinemaStash
+CinemaStash is a backend API for a movie management system built with the MERN stack (MongoDB, Express, Node.js). It allows users to register, manage a movie wishlist, add reviews, and fetch movie data from the TMDB API. The frontend is planned but not included in this repository.
+🚀 Features
 
-**CinemaStash** is a modular, full-stack MERN (MongoDB, Express, React, Node.js) API that helps users manage their personal movie wishlist, add reviews, and get personalized recommendations. It integrates with the TMDB API to fetch accurate movie data and trailers.
+🔐 User Authentication: Register, login with JWT and bcrypt.
+📝 Wishlist Management: Add, view, remove movies.
+🌟 Review System: Create, update, delete movie reviews (1–5 rating scale).
+🎥 TMDB Integration: Fetch movie details and posters by title.
+✅ Input Validation: Using express-validator for robust data handling.
+🛡️ Security: Rate limiting, protected routes, sensitive data filtering.
+📊 Planned: Pagination, search, filters, sorting, recommendations.
 
----
+🏗️ Tech Stack
 
-## 🚀 Features
 
-- 🔐 **User Authentication** (Register, Login, JWT-based auth)
-- 📝 **Wishlist Management** (Add, update, remove, clear)
-- 🌟 **Review System** (Comment, rate, and update reviews)
-- 🎥 **TMDB Integration** for:
-  - Fetching movie details by title
-  - Popular movies
-  - Movie trailers
-- 📊 **Pagination, Search, Filters & Sorting**
-- 🧠 **Recommendations** based on user activity
-- 🛡️ **Rate Limiting** on public and write routes
-- ✅ **Robust Validation & Error Handling**
 
----
+Layer
+Technology
 
-## 🏗️ Tech Stack
 
-| Layer      | Technology                          |
-|------------|-------------------------------------|
-| Backend    | Node.js, Express.js, MongoDB (Mongoose) |
-| Frontend   | *(Not included in this repo)*       |
-| API Data   | [TMDB API](https://www.themoviedb.org/documentation/api) |
-| Auth       | JWT, bcrypt                         |
-| Validation | express-validator                   |
-| Rate Limiting | express-rate-limit               |
 
----
+Backend
+Node.js, Express.js, MongoDB (Mongoose)
 
-## 📁 Folder Structure (Backend)
+
+API Data
+TMDB API
+
+
+Auth
+JWT, bcrypt
+
+
+Validation
+express-validator
+
+
+Rate Limiting
+express-rate-limit (planned)
+
+
+📁 Folder Structure
 CinemaStash/
 ├── controllers/
 │   ├── auth.controller.js
 │   ├── movie.controller.js
-│   ├── recommendation.controller.js  
 │   ├── review.controller.js
 │   ├── user.controller.js
 │   └── wishlist.controller.js
 ├── middleware/
 │   ├── authMiddleware.js
-│   ├── rateLimitter.js             
-│   └── validateRequest.js           
 ├── models/
 │   ├── movie.model.js
 │   ├── review.model.js
@@ -59,100 +62,203 @@ CinemaStash/
 │   └── wishlist.route.js
 ├── services/
 │   └── tmdb.service.js
-├── validators/
-│   ├── movie.validator.js           
-│   └── wishlist.validator.js       
 ├── .gitignore
 ├── index.js
-├── LICENSE                         
+├── LICENSE
 ├── package-lock.json
 └── package.json
 
+⚙️ Setup & Installation
+Prerequisites
 
----
+Node.js (v16+)
+MongoDB (v5+)
+TMDB API key (sign up)
+Git
 
-## ⚙️ Setup & Installation
+Steps
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/samuelAemro12/cinemastash.git
-cd cinemastash
-2. Install dependencies
-bash
-Copy
-Edit
+Clone the repository:
+git clone https://github.com/samuelAemro12/CinemaStash.git
+cd CinemaStash
+
+
+Install dependencies:
 npm install
-3. Setup .env
-env
-Copy
-Edit
+
+
+Set up .env: Create a .env file in the root directory:
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/cinemastash
 JWT_SECRET=your_jwt_secret
 TMDB_API_KEY=your_tmdb_api_key
-4. Run the server
-bash
-Copy
-Edit
-npm run start
-🧪 API Endpoints (Highlights)
-🔒 Auth
-POST /api/auth/register
 
-POST /api/auth/login
+
+Run the server:
+npm run start
+
+The API will be available at http://localhost:3000.
+
+
+🧪 API Endpoints
+🔒 Auth
+
+
+
+Method
+Endpoint
+Description
+Auth Required
+
+
+
+POST
+/api/auth/register
+Register a user
+No
+
+
+POST
+/api/auth/login
+Login and get JWT
+No
+
 
 🎞️ Movies
-GET /api/movies/ — All movies
 
-POST /api/movies/ — Create movie (fetches from TMDB)
 
-GET /api/movies/popular — TMDB popular movies
 
-GET /api/movies/search?title=Inception
+Method
+Endpoint
+Description
+Auth Required
 
-GET /api/movies/:id/trailer
+
+
+GET
+/api/movies
+Get all movies
+No
+
+
+GET
+/api/movies/:id
+Get a movie by ID
+No
+
+
+POST
+/api/movies
+Add movie from TMDB
+No
+
+
+PUT
+/api/movies/:id
+Update movie
+Yes
+
+
+DELETE
+/api/movies/:id
+Delete movie
+Yes
+
 
 📝 Wishlist
-POST /api/wishlist/
 
-GET /api/wishlist/:userId
 
-PUT /api/wishlist/:wishlistId
 
-DELETE /api/wishlist/:userId/:movieId
+Method
+Endpoint
+Description
+Auth Required
 
-DELETE /api/wishlist/clear/:userId
 
-🧠 Recommendations
-GET /api/wishlist/:userId/recommendations
+
+POST
+/api/wishlist
+Add movie to wishlist
+Yes
+
+
+GET
+/api/wishlist/:userId
+Get user’s wishlist
+Yes
+
+
+DELETE
+/api/wishlist/:userId/:movieId
+Remove from wishlist
+Yes
+
+
+🌟 Reviews
+
+
+
+Method
+Endpoint
+Description
+Auth Required
+
+
+
+GET
+/api/reviews/:movieId
+Get movie reviews
+No
+
+
+POST
+/api/reviews
+Create review
+Yes
+
+
+PUT
+/api/reviews/:id
+Update review
+Yes (owner)
+
+
+DELETE
+/api/reviews/:id
+Delete review
+Yes (owner)
+
 
 🔐 Security & Validation
-✅ Input validation using express-validator
 
-🛡️ Rate limiting for sensitive endpoints
-
-🔒 Auth middleware to protect user routes
-
-🔎 Sensitive data hidden from responses (e.g., password, email)
+Input Validation: express-validator for all user inputs.
+Auth Middleware: JWT protects sensitive routes.
+Data Filtering: Excludes sensitive fields (e.g., password, email).
+Rate Limiting: Planned for public and write routes (via express-rate-limit).
 
 📃 License
 This project is licensed under the MIT License.
-
 ✨ Author
-Samuel Aemro Melese 
-📧 [samuelaemrowork12@gmail.com or https://github.com/samuelAemro12/]
+Samuel Aemro Melese
+
+📧 samuelaemrowork12@gmail.com
+🐙 https:github.com/samuelAemro12/
 🎓 Final Year Computer Information Systems Student
-💼 Career-Focused Software Engineer
+💼 Aspiring Web Developer
 
 📌 Notes
-The frontend is currently not included.
 
-Test suite and CI/CD are planned for future updates.
+Frontend is not included; this is a backend-only API.
+Planned features:  CI/CD.
+Contributions welcome! See Contributing.
 
-Contributions and issues welcome!
+🤝 Contributing
 
-yaml
-Copy
-Edit
+Fork the repository.
+Create a feature branch (git checkout -b feature/YourFeature).
+Commit changes (git commit -m 'Add YourFeature').
+Push to the branch (git push origin feature/YourFeature).
+Open a Pull Request.
 
----
+🐛 Issues
+Report bugs or suggest features via GitHub Issues.
