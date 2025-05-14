@@ -52,7 +52,6 @@ export const getUserWishlist = async (req, res) => {
 
   const sortOptions = {};
   const allowedSortFields = ['createdAt', 'rating'];
-
   if (allowedSortFields.includes(sortBy)) {
     sortOptions[sortBy] = order === 'asc' ? 1 : -1;
   } else if (sortBy === 'title') {
@@ -63,9 +62,7 @@ export const getUserWishlist = async (req, res) => {
     const wishlist = await Wishlist.find(filter)
       .populate({
         path: 'movieId',
-        match: search
-          ? { title: { $regex: new RegExp(search, 'i') } }
-          : {},
+        match: search ? { title: { $regex: new RegExp(search, 'i') } } : {},
       })
       .sort(sortOptions)
       .skip(skip)
@@ -73,7 +70,7 @@ export const getUserWishlist = async (req, res) => {
       .exec();
 
     const filteredWishlist = wishlist.filter((item) => item.movieId !== null);
-    const total = await Wishlist.countDocuments({ userId });
+    const total = await Wishlist.countDocuments(filter);
     const totalPages = Math.ceil(total / limit);
 
     res.status(200).json({
@@ -142,16 +139,9 @@ export const updateWishlistEntry = async (req, res) => {
     }
 
     if (comment !== undefined) entry.comment = comment;
-
-    if (rating !== undefined) {
-      if (typeof rating !== 'number' || rating < 0 || rating > 5) {
-        return res.status(400).json({ message: 'Rating must be a number between 0 and 5' });
-      }
-      entry.rating = rating;
-    }
-
-    if (watched !== undefined) entry.watched = Boolean(watched);
-    if (favorite !== undefined) entry.favorite = Boolean(favorite);
+    if (rating !== undefined) entry.rating = rating;
+    if (watched !== undefined) entry.watched = watched;
+    if (favorite !== undefined) entry.favorite = favorite;
 
     const updatedEntry = await entry.save();
 

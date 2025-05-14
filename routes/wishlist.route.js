@@ -10,19 +10,46 @@ import {
 import { protect } from '../middlewares/authMiddleware.js';
 import { getMovieRecommendations } from '../controllers/recommendation.controller.js';
 import { publicLimiter, dataWriteLimiter } from '../middlewares/rateLimitter.js';
+import {
+  validateAddToWishlist,
+  validateUpdateWishlistEntry,
+  validateRemoveFromWishlist,
+  handleValidationErrors,
+} from '../validators/wishlist.validator.js';
 
 const router = express.Router();
 
-// read opps
 router.get('/:userId', protect, publicLimiter, getUserWishlist);
 router.get('/:userId/count', protect, publicLimiter, getWishlistCount);
 router.get('/:userId/recomendations', protect, publicLimiter, getMovieRecommendations);
 
-// write opps
-router.post('/', protect, dataWriteLimiter, addToWishlist);
-router.put('/:wishlistId', protect, dataWriteLimiter, updateWishlistEntry);
-router.delete('/:userId/:movieId', protect, dataWriteLimiter, removeFromWishlist);
-router.delete('/clear/:userId', protect, dataWriteLimiter, clearWishlist);
+router.post(
+  '/',
+  protect,
+  dataWriteLimiter,
+  validateAddToWishlist,
+  handleValidationErrors,
+  addToWishlist
+);
 
+router.put(
+  '/:wishlistId',
+  protect,
+  validateUpdateWishlistEntry,
+  handleValidationErrors,
+  dataWriteLimiter,
+  updateWishlistEntry
+);
+
+router.delete(
+  '/:userId/:movieId',
+  protect,
+  dataWriteLimiter,
+  validateRemoveFromWishlist,
+  handleValidationErrors,
+  removeFromWishlist
+);
+
+router.delete('/clear/:userId', protect, dataWriteLimiter, clearWishlist);
 
 export default router;
