@@ -1,6 +1,7 @@
-🎬 CinemaStash
+# 🎬 CinemaStash
 CinemaStash is a backend API for a movie management system built with MongoDB, Express, and Node.js. It supports user authentication, movie wishlist management, reviews, and TMDB API integration for movie data. The frontend is planned but not included.
-🚀 Features
+
+##🚀 Features
 
 🔐 User Authentication: JWT-based register/login with bcrypt hashing.
 📝 Wishlist Management: Add, view, remove movies from user wishlist.
@@ -9,7 +10,7 @@ CinemaStash is a backend API for a movie management system built with MongoDB, E
 ✅ Input Validation: express-validator for user, review, and movie routes.
 🛡️ Security: Protected routes, sensitive data filtering (e.g., password, email).
 
-🏗️ Tech Stack
+## 🏗️ Tech Stack
 Layer - Technology
 
 Backend - Node.js, Express.js, MongoDB (Mongoose)
@@ -22,7 +23,7 @@ Validation - express-validator
 
 Rate Limiting - express-rate-limit
 
-📁 Folder Structure
+## 📁 Folder Structure
 CinemaStash/
 ├── controllers/
 │   ├── auth.controller.js
@@ -95,7 +96,7 @@ Run the server:
 npm run start
 ```
 
-🔐 Security & Validation
+## 🔐 Security & Validation
 
 Input Validation: express-validator for user, review, and movie inputs.
 Auth Middleware: JWT protects wishlist, review, and user routes.
@@ -108,22 +109,22 @@ MongoDB Connection: Ensure MongoDB is running or use Atlas URI.
 TMDB Errors: Verify TMDB_API_KEY is valid.
 JWT Issues: Check JWT_SECRET and token in Authorization: Bearer <token>.
 
-📃 License
+## 📃 License
 MIT License.
-✨ ## Author
-Samuel Aemro Melese
+## Author
+### Samuel Aemro Melese
 
 📧 samuelaemrowork12@gmail.com
 🐙https://github.com/samuelAemro12/
 🎓 Final Year Computer Information Systems Student
 💼 Aspiring Web Developer
 
-📌 Notes
+## 📌 Notes
 
 Backend-only API; frontend planned.
 Contributions welcome! See Contributing.
 
-🤝 Contributing
+## 🤝 Contributing
 
 Fork the repository.
 Create a feature branch: git checkout -b feature/YourFeature
@@ -131,6 +132,6 @@ Commit changes: git commit -m 'Add YourFeature'
 Push to branch: git push origin feature/YourFeature
 Open a Pull Request.
 
-🐛 Issues
+## 🐛 Issues
 Report bugs or suggest features via GitHub Issues.
 
